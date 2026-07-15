@@ -1,0 +1,70 @@
+[tool.poetry]
+name = "versioned-storage-service"
+version = "0.3.0"
+description = "FastAPI service for storing versioned data sets"
+package-mode = true
+
+packages = [
+  { include = "src" },
+]
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+testpaths = ["tests"]
+
+[tool.poetry.dependencies]
+aiosqlite = "0.22.1"
+fastapi = "0.136.1"
+httpx = "0.28.1"
+miniopy-async = "1.23.4"
+python = "~3.11"
+python-dotenv = "1.2.2"
+pydantic = "2.12.5"
+sqlalchemy = "2.0.46"
+uvicorn = "0.41.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "9.0.3"
+ruff = "^0.13.1"
+mypy = "^1.18.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+exclude = [".venv"]
+fix = true
+
+[tool.ruff.lint]
+select = ["E", "F", "I"]
+
+[tool.mypy]
+python_version = "3.11"
+plugins = [
+  "sqlalchemy.ext.mypy.plugin",
+  "pydantic.mypy",
+]
+follow_imports = "skip"
+mypy_path = ["src"]
+disallow_untyped_defs = true
+disallow_incomplete_defs = true
+no_implicit_optional = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+warn_return_any = true
+strict_equality = true
+check_untyped_defs = true
+pretty = true
+show_error_codes = true
+show_column_numbers = true
+
+exclude = [
+  "^.venv/.*",
+]
+
+[[tool.mypy.overrides]]
+module = ["sqlalchemy.*"]
+ignore_missing_imports = true
